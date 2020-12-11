@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const morgan = require('morgan');
 const app = express();
 
 module.exports = app;
@@ -10,6 +11,7 @@ module.exports = app;
 */
 const PORT = process.env.PORT || 4001;
 app.use(cors());
+app.use(morgan('tiny'));
 app.use(bodyParser.json());
 // Add middleware for handling CORS requests from index.html
 
@@ -20,6 +22,15 @@ app.use(bodyParser.json());
 // Mount your existing apiRouter below at the '/api' path.
 const apiRouter = require('./server/api');
 app.use('/api', apiRouter);
+
+const meetingsRouter = require('./server/meetings');
+app.use('/api/meetings', meetingsRouter);
+
+const ideasRouter = require('./server/ideas');
+app.use('/api/ideas', ideasRouter);
+
+const minionsRouter = require('./server/minions');
+app.use('/api/minions', minionsRouter);
 
 // This conditional is here for testing purposes:
 if (!module.parent) { 

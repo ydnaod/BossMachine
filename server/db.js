@@ -195,6 +195,7 @@ const findDataArrayByName = (name) => {
 const getAllFromDatabase = (modelType) => {
   const model = findDataArrayByName(modelType);
   if (model === null) {
+    console.log('shit was null')
     return null;
   }
   return model.data;
