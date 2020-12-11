@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 
 module.exports = app;
@@ -7,7 +9,8 @@ module.exports = app;
 *  the frontend application to interact as planned with the api server
 */
 const PORT = process.env.PORT || 4001;
-
+app.use(cors());
+app.use(bodyParser.json());
 // Add middleware for handling CORS requests from index.html
 
 
@@ -16,7 +19,7 @@ const PORT = process.env.PORT || 4001;
 
 // Mount your existing apiRouter below at the '/api' path.
 const apiRouter = require('./server/api');
-
+app.use('/api', apiRouter);
 
 // This conditional is here for testing purposes:
 if (!module.parent) { 
