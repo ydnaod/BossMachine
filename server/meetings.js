@@ -8,8 +8,7 @@ meetingsRouter.get('/', (req, res, next) => {
 
 meetingsRouter.post('/', (req, res, next) => {
     const newMeeting = db.createMeeting();
-    console.log(newMeeting);
-    res.send(db.addToDatabase('meetings', newMeeting));
+    res.status(201).send(db.addToDatabase('meetings', newMeeting));
 })
 
 meetingsRouter.delete('/', (req, res, next) => {

@@ -23,7 +23,7 @@ minionsRouter.get('/', (req, res, next) => {
 
 minionsRouter.post('/', (req, res, next) => {
     db.addToDatabase('minions', req.body);
-    res.send(req.body);
+    res.status(201).send(req.body);
 })
 
 minionsRouter.get('/:minionId', (req, res, next) => {

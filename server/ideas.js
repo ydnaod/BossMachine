@@ -2,6 +2,7 @@ const express = require('express');
 const ideasRouter = express.Router();
 const db = require('./db')
 const bodyParser = require('body-parser');
+const checkMillionDollarIdea = require('./checkMillionDollarIdea');
 
 ideasRouter.param('ideaId', (req, res, next, id) => {
     const ideas = db.getAllFromDatabase('ideas');
@@ -20,10 +21,10 @@ ideasRouter.get('/', (req, res, next) => {
     res.send(db.getAllFromDatabase('ideas'));
 })
 
-ideasRouter.post('/', (req, res, next) => {
+ideasRouter.post('/', checkMillionDollarIdea, (req, res, next) => {
     console.log(req.body);
     db.addToDatabase('ideas', req.body);
-    res.send(req.body);
+    res.status(201).send(req.body);
 })
 
 ideasRouter.get('/:ideaId', (req, res, next) => {
@@ -31,7 +32,7 @@ ideasRouter.get('/:ideaId', (req, res, next) => {
     res.send(ideaList[req.ideaIndex]);
 })
 
-ideasRouter.put('/:ideaId', (req, res, next) => {
+ideasRouter.put('/:ideaId', checkMillionDollarIdea, (req, res, next) => {
     res.send(db.updateInstanceInDatabase('ideas', req.body));
 })
 
