@@ -1,5 +1,5 @@
 const express = require('express');
-//const { default: minions } = require('../browser/store/minions');
+const { DllPlugin } = require('webpack');
 const minionsRouter = express.Router();
 const db = require('./db')
 
@@ -29,6 +29,20 @@ minionsRouter.post('/', (req, res, next) => {
 minionsRouter.get('/:minionId', (req, res, next) => {
     const minionList = db.getAllFromDatabase('minions');
     res.send(minionList[req.minionIndex]);
+})
+
+minionsRouter.post('/:minionId', (req, res, next) => {
+    const updatedMinion = db.createMinion();
+    updatedMinion.id = req.params.minionId;
+    console.log(updatedMinion);
+    res.send(db.updateInstanceInDatabase('minions', updatedMinion));
+})
+
+minionsRouter.delete('/:minionId', (req, res, next) => {
+    const minionList = db.getAllFromDatabase('minions');
+    console.log(req.params);
+    res.status(204).send(minionList[req.minionIndex]);
+    db.deleteFromDatabasebyId('minions', req.params.minionId);
 })
 
 module.exports = minionsRouter;
