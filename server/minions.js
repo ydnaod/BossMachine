@@ -1,5 +1,4 @@
 const express = require('express');
-const { DllPlugin } = require('webpack');
 const minionsRouter = express.Router();
 const db = require('./db')
 
